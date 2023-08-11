@@ -3,10 +3,18 @@ document.addEventListener("DOMContentLoaded", function() {
     const submitButton = document.getElementById("submit-guess");
     const guessInput = document.getElementById("guess-input");
     const attemptsDiv = document.querySelector(".attempts");
+    const attemptLimit = 8;
+    let numberOfAttempts = 0;
 
     submitButton.addEventListener("click", function() {
         const guess = guessInput.value.toLowerCase();
         
+        numberOfAttempts++
+        if (numberOfAttempts > attemptLimit){
+            alert("you are out of guesses. Gameover")
+            return;
+        }
+
         if (guess.length !== 5) {
             alert("Please enter a 5-letter word.");
             return;
@@ -14,9 +22,16 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const feedback = getFeedback(guess, targetWord);
         displayAttempt(guess, feedback);
-
+        
         // Clear the input for the next guess
         guessInput.value = '';
+      
+        // Check if victory
+        for (color in feedback){
+            if (feedback[color] != "green")
+                break
+            alert("You have won the game")
+        }
     });
 
     function getFeedback(guess, target) {
