@@ -1,0 +1,24 @@
+{
+  "name": "colewordle",
+  "version": "1.0.0",
+  "description": "A worlde game about J.Cole",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ColeWordle"
+  },
+  "author": "Olof Lindberg",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "*",
+    "consolidate": "*",
+    "dust": "*",
+    "dustjs-helpers": "*",
+    "dustjs-linkedin": "*",
+    "express": "*",
+    "pg": "*"
+  }
+}
