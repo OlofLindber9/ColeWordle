@@ -3,12 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Web Browser App</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>ColeWordle</title>
+    <link rel="stylesheet" href="public/css/bootstrap.css">
+    <link rel="stylesheet" href="public/css/style.css">
 </head>
 <body>
-    <!-- Your HTML content goes here -->
-    
-    <script src="script.js"></script>
+    <div class="game-container">
+        <h1>ColeWordle</h1>
+        <div class="attempts">
+            <!-- past guesses are inserted here -->
+        </div>
+        <div class="input-area">
+            <input type="text" id="guess-input" maxlength="5" placeholder="Your guess">
+            <button id="submit-guess">Guess</button>
+        </div>
+        <div class="result-message"></div>
+    </div>
+
+    <script src="public/js/script.js"></script>
+    <script src="public/js/bootstrap.js"></script>
 </body>
 </html>
+
+
+<!--        -->

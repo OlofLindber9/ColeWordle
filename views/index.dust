@@ -1,0 +1,26 @@
+{>"layout" /}
+
+{<body}
+<div class="container mt-5">
+    <h1 class="text-center">ColeWordle</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+
+            <!-- Input for player's guess -->
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Enter your guess" id="playerInput">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="submitButton">Submit</button>
+                </div>
+            </div>
+
+            <!-- Display past guesses -->
+            <ul class="list-group" id="pastGuesses"></ul>
+
+            <!-- Display feedback for the current guess -->
+            <ul class="list-group mt-3" id="currentFeedback"></ul>
+        </div>
+    </div>
+</div>
+{/body}
