@@ -1,4 +1,5 @@
  document.addEventListener("DOMContentLoaded", function() {
+
     const targetWord = "apple"; // For demonstration purposes, you can randomize this in a real game
     const submitButton = document.getElementById("submit-guess");
     const guessInput = document.getElementById("guess-input");
@@ -74,12 +75,19 @@
             const letterBadge = document.createElement('span');
             letterBadge.className = `badge badge-pill mr-2 mb-2 badge-${feedback[index]}`;
             //letterBadge.className = `badge bg-${feedback[index]}`;
-            letterBadge.textContent = "letter";
+            letterBadge.textContent = letter;
             letterBadge.style.backgroundColor = feedback[index];
             guessRow.appendChild(letterBadge);
         });
         console.log("Display complete.");
         attemptsDiv.appendChild(guessRow);
+
+        fetch('http://localhost:3000/api/songs')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Do something with the data
+            })
+            .catch(error => console.error('Error fetching data:', error));
     }
 
 });

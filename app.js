@@ -7,8 +7,9 @@ var express = require('express'),
     app = express();
 
 
-// DB Connect String
-var connect = "postgres://Olof_Lindberg:3113@localhost/ColeWordleDB";
+const client = require('./db');
+
+
 
 // Assign Dust Engine To .dust Files
 app.engine('dust', cons.dust);
@@ -24,13 +25,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded( {extended: false}));
 
+const cors = require('cors');
+app.use(cors());
+
 
 app.get('/', function(req, res){
     res.render('index');
 });
 
-
 // Server
 app.listen(3000, function(){
     console.log('Server Started On Port 3000');
+});
+
+//get songs
+
+app.get('/api/songs', async (req, res) => {
+    try {
+        const result = await client.query('SELECT * FROM songs');
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        res.status(500).send('Error fetching data');
+    }
 });
