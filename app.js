@@ -111,3 +111,18 @@ app.get('/api/features', async (req, res) => {
         res.status(500).send('Error fetching data');
     }
 });
+
+//Search for a string in songs
+app.get('/api/search', async (req, res) => {
+    const searchString = req.query.q;
+    try {
+        const query = 'SELECT COUNT(*) FROM songs WHERE name LIKE $1';
+        const values = [`%${searchString}%`];
+
+        const result = await client.query(query, values);
+        res.json({ count: parseInt(result.rows[0].count, 10) });
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        res.status(500).send('Error fetching data');
+    }
+});

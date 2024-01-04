@@ -5,23 +5,36 @@
     const guessInput = document.getElementById("guess-input");
     const attemptsDiv = document.querySelector(".attempts");
     const attemptLimit = 8;
+    const AlbumOrder = {
+        "Cole World: The Sideline Story": 1,
+        "Born Sinner": 2,
+        "2014 Forest Hills Drive": 3,
+        "4 Your Eyez Only": 4,
+        "KOD": 5,
+        "The Off-Season": 6
+    };
     let numberOfAttempts = 0;
     var targetAlbum;
     var targetTrackNumber;
     var targetLength;
     var targetFeatures;
 
-    submitButton.addEventListener("click", function() {
+    submitButton.addEventListener("click", async function() {
         const guess = guessInput.value;
         
+        const validInput = await checkInput(guess);
+        if (!validInput) {
+            alert("That is not a song. Try again");
+            guessInput.value = '';                      // Clear the input for the next guess
+            return;
+        }
+
         numberOfAttempts++
         if (numberOfAttempts > attemptLimit){
             alert("you are out of guesses. Gameover")
             return;
         }
 
-        const feedback = getFeedback(guess, targetSong);
-        //displayAttempt(guess, feedback);
         const guessRow = document.createElement('li');  
         guessRow.className = "list-group-item"; 
         displayAttempt(guess, guessRow);        
@@ -42,18 +55,6 @@
             alert("You have won the game");
         } */
     });
-
-    function getFeedback(guess, target) {
-        return [...guess].map((letter, index) => {
-            if (letter === target[index]) {
-                return 'green';
-            } else if (target.includes(letter)) {
-                return 'yellow';
-            } else {
-                return 'gray';
-            }
-        });
-    }
 
     function displaySongName(guess, guessRow){
         console.log("Attempting to display...");
@@ -110,8 +111,11 @@
         .then(response => response.json())
         .then(data => {
             color = '#090401';
-            if (targetAlbum === data[0].album){
+            if (AlbumOrder[targetAlbum] === AlbumOrder[data[0].album]){
                 color = '#28812d'
+            }
+            if (Math.abs(AlbumOrder[targetAlbum] -  AlbumOrder[data[0].album]) < 3){    //THIS DOESN'T INDICATE IF YOU ARE ABOVE OR UNDER
+                color = '#c39213'
             }
             letterBadge.style.backgroundColor = color;
             guessRow.appendChild(letterBadge);
@@ -150,6 +154,9 @@
             if (targetTrackNumber === data[0].tracknumber){
                 color = '#28812d'
             }
+            if (Math.abs(parseInt(targetTrackNumber, 10) - parseInt(data[0].tracknumber, 10)) < 3 ) {
+                color = '#c39213'
+            }
             letterBadge.style.backgroundColor = color;
             guessRow.appendChild(letterBadge);
             console.log("Display complete.");
@@ -185,6 +192,10 @@
             color = '#090401';
             if (targetLength === data[0].length){
                 color = '#28812d'
+            }
+
+            if (Math.abs(convertTimeStringToSeconds(targetLength) - convertTimeStringToSeconds(data[0].length)) < 31){
+                color = '#c39213'
             }
             letterBadge.style.backgroundColor = color;
             guessRow.appendChild(letterBadge);
@@ -230,6 +241,13 @@
         
     }
 
+    function convertTimeStringToSeconds(timeString) {
+        const parts = timeString.split(':');
+        const minutes = parseInt(parts[0], 10);
+        const seconds = parseInt(parts[1], 10);
+        return (minutes * 60) + seconds;
+    }
+
     async function displayAttempt(guess, guessRow){
         await displaySongName(guess, guessRow);
         await displaySongAlbum(guess, guessRow);
@@ -237,7 +255,27 @@
         await displaySongLength(guess, guessRow);
         await displaySongFeature(guess, guessRow);
     }
+
+    async function checkInput(input){
+        let encodedInput = encodeURIComponent(input);
+        let url = `http://localhost:3000/api/search?q=${encodedInput}`;
+
+        try{
+            const response = await fetch(url);
+            const data = await response.json();
+
+            console.log(data.count); // Assuming the server returns a JSON object with a 'count' property
+            return data.count > 0; // Returns true if count is greater than 0, false otherwise
+        } catch (error) {
+            console.error('Error during search:', error);
+            return false; // Return false in case of an error
+        }
+
+    }
+
 });
+
+
 
 
 
