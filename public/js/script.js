@@ -258,7 +258,7 @@
 
     async function checkInput(input){
         let encodedInput = encodeURIComponent(input);
-        let url = `http://localhost:3000/api/search?q=${encodedInput}`;
+        let url = `http://localhost:3000/api/count?q=${encodedInput}`;
 
         try{
             const response = await fetch(url);

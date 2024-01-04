@@ -10,18 +10,27 @@
 <body>
     <div class="game-container">
         <h1>ColeWordle</h1>
+
+
         <div class="attempts">
             <!-- past guesses are inserted here -->
         </div>
+
+
         <div class="input-area">
             <input type="text" id="guess-input" placeholder="Your guess">
             <button id="submit-guess">Guess</button>
         </div>
+    <div id="suggestion-box" class="suggestion-box"></div>
+
+
+
         <div class="result-message"></div>
     </div>
 
-    <script src="public/js/script.js"></script>
-    <script src="public/js/bootstrap.js"></script>
+    <script src="public/js/script.js" defer></script>
+    <script src="public/js/bootstrap.js" defer></script>
+    <script src="public/js/inputSuggestion.js" defer></script>
 </body>
 </html>
 

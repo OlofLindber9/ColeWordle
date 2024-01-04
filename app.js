@@ -112,8 +112,8 @@ app.get('/api/features', async (req, res) => {
     }
 });
 
-//Search for a string in songs
-app.get('/api/search', async (req, res) => {
+//Count songs from a string
+app.get('/api/count', async (req, res) => {
     const searchString = req.query.q;
     try {
         const query = 'SELECT COUNT(*) FROM songs WHERE name LIKE $1';
@@ -121,6 +121,22 @@ app.get('/api/search', async (req, res) => {
 
         const result = await client.query(query, values);
         res.json({ count: parseInt(result.rows[0].count, 10) });
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        res.status(500).send('Error fetching data');
+    }
+});
+
+// Suggest songs from string with a limit of 10 results and case-insensitive search
+app.get('/api/suggestions', async (req, res) => {
+    const partialName = req.query.partial;
+    try {
+        // Use ILIKE for case-insensitive matching
+        const query = 'SELECT name FROM songs WHERE name ILIKE $1 LIMIT 10';
+        const values = [`%${partialName}%`];
+
+        const result = await client.query(query, values);
+        res.json(result.rows.map(row => row.name));
     } catch (err) {
         console.error('Error executing query', err.stack);
         res.status(500).send('Error fetching data');
