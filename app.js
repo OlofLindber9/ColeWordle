@@ -38,11 +38,73 @@ app.listen(3000, function(){
     console.log('Server Started On Port 3000');
 });
 
-//get songs
 
+//get songs
 app.get('/api/songs', async (req, res) => {
     try {
         const result = await client.query('SELECT * FROM songs');
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        res.status(500).send('Error fetching data');
+    }
+});
+
+
+//get song name
+app.get('/api/name', async (req, res) => {      //changed Name to name maybe not working
+    const songName = req.query.name;
+    try {
+        const result = await client.query('SELECT name FROM songs WHERE name = $1', [songName]);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        res.status(500).send('Error fetching data');
+    }
+});
+
+
+//get song album
+app.get('/api/album', async (req, res) => {
+    const songName = req.query.name;
+    try {
+        const result = await client.query('SELECT album FROM songs WHERE name = $1', [songName]);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        res.status(500).send('Error fetching data');
+    }
+});
+
+//get song tracknumber
+app.get('/api/tracknumber', async (req, res) => {
+    const songName = req.query.name;
+    try {
+        const result = await client.query('SELECT tracknumber FROM songs WHERE name = $1', [songName]);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        res.status(500).send('Error fetching data');
+    }
+});
+
+//get song length
+app.get('/api/length', async (req, res) => {
+    const songName = req.query.name;
+    try {
+        const result = await client.query('SELECT length FROM songs WHERE name = $1', [songName]);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        res.status(500).send('Error fetching data');
+    }
+});
+
+//get song features
+app.get('/api/features', async (req, res) => {
+    const songName = req.query.name;
+    try {
+        const result = await client.query('SELECT features FROM songs WHERE name = $1', [songName]);
         res.json(result.rows);
     } catch (err) {
         console.error('Error executing query', err.stack);
