@@ -142,3 +142,18 @@ app.get('/api/suggestions', async (req, res) => {
         res.status(500).send('Error fetching data');
     }
 });
+
+// Get all song data from a song
+app.get('/api/songdata', async (req, res) => {
+    const songName = req.query.name;
+    try {
+        const query = 'SELECT * FROM songs WHERE name LIKE $1';
+        const values = [songName];
+
+        const result = await client.query(query, values);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        res.status(500).send('Error fetching data');
+    }
+});

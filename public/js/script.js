@@ -25,7 +25,7 @@
         const validInput = await checkInput(guess);
         if (!validInput) {
             alert("That is not a song. Try again");
-            guessInput.value = '';                      // Clear the input for the next guess
+            guessInput.value = '';
             return;
         }
 
@@ -37,23 +37,17 @@
 
         const guessRow = document.createElement('li');  
         guessRow.className = "list-group-item"; 
-        displayAttempt(guess, guessRow);        
+        await displayAttempt(guess, guessRow);   
+        
+        const victory = await checkIfVictory(guess, targetSong);
+        if (victory) {
+            alert("CONGRATULATIONS! You guessed the correct song");
+            guessInput.value = '';                      
+            return;
+        }
         
         // Clear the input for the next guess
         guessInput.value = '';
-      
-        // Check if victory
-/*         let victory = true;
-        for (color in feedback) {
-            if (feedback[color] !== "green") {
-                victory = false;
-                break; // Exit the loop as victory is not possible with a non-green color
-            }
-        }
-        
-        if (victory) {
-            alert("You have won the game");
-        } */
     });
 
     function displaySongName(guess, guessRow){
@@ -111,10 +105,10 @@
         .then(response => response.json())
         .then(data => {
             color = '#090401';
-            if (AlbumOrder[targetAlbum] === AlbumOrder[data[0].album]){
+            if ((AlbumOrder[targetAlbum] - AlbumOrder[data[0].album]) === 0){
                 color = '#28812d'
             }
-            if (Math.abs(AlbumOrder[targetAlbum] -  AlbumOrder[data[0].album]) < 3){    //THIS DOESN'T INDICATE IF YOU ARE ABOVE OR UNDER
+            else if (Math.abs(AlbumOrder[targetAlbum] -  AlbumOrder[data[0].album]) < 3){    //THIS DOESN'T INDICATE IF YOU ARE ABOVE OR UNDER
                 color = '#c39213'
             }
             letterBadge.style.backgroundColor = color;
@@ -154,7 +148,7 @@
             if (targetTrackNumber === data[0].tracknumber){
                 color = '#28812d'
             }
-            if (Math.abs(parseInt(targetTrackNumber, 10) - parseInt(data[0].tracknumber, 10)) < 3 ) {
+            else if (Math.abs(parseInt(targetTrackNumber, 10) - parseInt(data[0].tracknumber, 10)) < 3 ) {
                 color = '#c39213'
             }
             letterBadge.style.backgroundColor = color;
@@ -194,7 +188,7 @@
                 color = '#28812d'
             }
 
-            if (Math.abs(convertTimeStringToSeconds(targetLength) - convertTimeStringToSeconds(data[0].length)) < 31){
+            else if (Math.abs(convertTimeStringToSeconds(targetLength) - convertTimeStringToSeconds(data[0].length)) < 31){
                 color = '#c39213'
             }
             letterBadge.style.backgroundColor = color;
@@ -254,6 +248,7 @@
         await displaySongNumber(guess, guessRow);
         await displaySongLength(guess, guessRow);
         await displaySongFeature(guess, guessRow);
+        await new Promise(resolve => setTimeout(resolve, 100));
     }
 
     async function checkInput(input){
@@ -264,13 +259,42 @@
             const response = await fetch(url);
             const data = await response.json();
 
-            console.log(data.count); // Assuming the server returns a JSON object with a 'count' property
-            return data.count > 0; // Returns true if count is greater than 0, false otherwise
+            console.log(data.count); 
+            return data.count > 0;
         } catch (error) {
             console.error('Error during search:', error);
-            return false; // Return false in case of an error
+            return false;
         }
 
+    }
+
+    async function checkIfVictory(guess, targetSong){
+        let guessData, targetData;
+
+        try {
+            let guessResponse = await fetch(`http://localhost:3000/api/songdata?name=${encodeURIComponent(guess)}`);
+            let guessResult = await guessResponse.json();
+            guessData = guessResult[0];
+    
+            let targetResponse = await fetch(`http://localhost:3000/api/songdata?name=${encodeURIComponent(targetSong)}`);
+            let targetResult = await targetResponse.json();
+            targetData = targetResult[0];
+    
+
+            if (guessData && targetData) {
+
+                return guessData.name === targetData.name &&
+                       guessData.album === targetData.album &&
+                       guessData.length === targetData.length &&
+                       guessData.tracknumber === targetData.tracknumber &&
+                       guessData.features === targetData.features;
+            } else {
+                return false;
+            }
+        } catch (error) {
+            console.error('Error fetching song data:', error);
+            return false; // In case of error, return false
+        }
     }
 
 });
