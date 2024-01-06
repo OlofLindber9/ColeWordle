@@ -106,17 +106,27 @@ h1 {
     display: inline-block;
     padding: 10px;
     margin: 0 4px;
-    border-radius: 4px;
+    border: 1px solid antiquewhite;
     text-align: center;
     color: white;
     overflow: hidden; 
     white-space: nowrap; 
     text-overflow: ellipsis;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Adjust color and glow strength */
 }
 
-.cell.black { background-color: #000000; } 
-.cell.green { background-color: #246126; } 
-.cell.yellow { background-color: #e9974a; } 
+.cell.black { 
+    background-color: #000000;
+    box-shadow: 0 0 40px #333;
+ } 
+.cell.green { 
+    background-color: #246126; 
+    box-shadow: 0 0 40px #3f9b4a;
+} 
+.cell.yellow { 
+    background-color: #e9974a; 
+    box-shadow: 0 0 40px #fcb75d;
+} 
 
 .matrix-row {
     display: grid;
