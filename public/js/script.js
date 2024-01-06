@@ -19,6 +19,37 @@
     var guessLength;
     var guessFeatures;
 
+
+    const headerRow = document.createElement('li');  
+    headerRow.className = "matrix-row";
+    attemptsDiv.appendChild(headerRow); 
+
+    const songNameheader = document.createElement('div');
+    songNameheader.className = 'header';
+    songNameheader.textContent = 'Song'
+    headerRow.appendChild(songNameheader);
+
+    const songAlbumheader = document.createElement('div');
+    songAlbumheader.className = 'header';
+    songAlbumheader.textContent = 'Album'
+    headerRow.appendChild(songAlbumheader);
+
+    const songNumberheader = document.createElement('div');
+    songNumberheader.className = 'header';
+    songNumberheader.textContent = 'Track No.'
+    headerRow.appendChild(songNumberheader);
+
+    const songLengthheader = document.createElement('div');
+    songLengthheader.className = 'header';
+    songLengthheader.textContent = 'Track Length'
+    headerRow.appendChild(songLengthheader);
+
+    const songFeatureheader = document.createElement('div');
+    songFeatureheader.className = 'header';
+    songFeatureheader.textContent = 'Features'
+    headerRow.appendChild(songFeatureheader); 
+
+
     submitButton.addEventListener("click", async function() {
         const guess = guessInput.value;
         

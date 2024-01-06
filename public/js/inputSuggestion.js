@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const suggestionBox = document.getElementById('suggestion-box');
     input.parentNode.insertBefore(suggestionBox, input.nextSibling);
 
+    let selectedIndex = -1;
+
 
     input.addEventListener('input', function() {
         const partialName = input.value;
@@ -35,6 +37,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
             })
             .catch(error => console.error('Error:', error));
     });
+
+    input.addEventListener('keyup', (e) => {
+        const items = document.querySelectorAll('.suggestion-item');
+        if (e.code === 'ArrowDown') {
+            selectedIndex = (selectedIndex + 1) % items.length;
+            updateSelected();
+            e.preventDefault(); // Prevent the cursor from moving in the input field
+        } else if (e.code === 'ArrowUp') {
+            selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+            updateSelected();
+            e.preventDefault();
+        } else if (e.code === 'Enter' && selectedIndex >= 0) {
+            input.value = items[selectedIndex].textContent;
+            suggestionBox.style.display = 'none';
+            selectedIndex = -1;
+            e.preventDefault();
+        }
+    });
     
 
         // Hide suggestion box when clicking outside
@@ -43,4 +63,46 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 suggestionBox.style.display = 'none';
             }
         });
+
+    function updateSelected() {
+        document.querySelectorAll('.suggestion-item').forEach((item, index) => {
+            if (index === selectedIndex) {
+                item.classList.add('selected');
+                item.scrollIntoView({ block: 'nearest' }); // Ensure the selected item is in the visible area
+            } else {
+                item.classList.remove('selected');
+            }
+        });
+    }
 });
+
+
+/*
+function handleKeydown(e) {
+    const items = document.querySelectorAll('.suggestion-item');
+    if (e.key === 'ArrowDown') {
+        selectedIndex = (selectedIndex + 1) % items.length;
+        updateSelected();
+        e.preventDefault(); // Prevent the cursor from moving in the input field
+    } else if (e.key === 'ArrowUp') {
+        selectedIndex = (selectedIndex - 1 + items.length) % items.length;
+        updateSelected();
+        e.preventDefault();
+    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+        input.value = items[selectedIndex].textContent;
+        suggestionBox.style.display = 'none';
+        selectedIndex = -1;
+        e.preventDefault();
+    }
+}
+
+function updateSelected() {
+    document.querySelectorAll('.suggestion-item').forEach((item, index) => {
+        if (index === selectedIndex) {
+            item.classList.add('selected');
+            item.scrollIntoView({ block: 'nearest' }); // Ensure the selected item is in the visible area
+        } else {
+            item.classList.remove('selected');
+        }
+    });
+}*/
