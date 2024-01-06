@@ -18,6 +18,7 @@
     var guessTrackNumber;
     var guessLength;
     var guessFeatures;
+    var gameOver = false;
 
 
     const headerRow = document.createElement('li');  
@@ -51,6 +52,11 @@
 
 
     submitButton.addEventListener("click", async function() {
+        
+        if(gameOver){
+            return;
+        }
+        
         const guess = guessInput.value;
         
         const validInput = await checkInput(guess);
@@ -60,25 +66,36 @@
             return;
         }
 
+        const victory = await checkIfVictory(guess, targetSong);
+        if (victory) {
+            const guessRow = document.createElement('li');  
+            guessRow.className = "matrix-row"; 
+            await displayAttempt(guess, guessRow); 
+            alert("CONGRATULATIONS! You guessed the correct song");
+            guessInput.value = '';
+            gameOver = true;                      
+            return;
+        }
+
         numberOfAttempts++
-        if (numberOfAttempts > attemptLimit){
+
+        if (numberOfAttempts >= attemptLimit){
+            if (numberOfAttempts <= attemptLimit){
+                const guessRow = document.createElement('li');  
+                guessRow.className = "matrix-row"; 
+                await displayAttempt(guess, guessRow);   
+            }
             alert("you are out of guesses. Gameover")
             return;
         }
 
         const guessRow = document.createElement('li');  
         guessRow.className = "matrix-row"; 
-        await displayAttempt(guess, guessRow);   
-        
-        const victory = await checkIfVictory(guess, targetSong);
-        if (victory) {
-            alert("CONGRATULATIONS! You guessed the correct song");
-            guessInput.value = '';                      
-            return;
-        }
+        await displayAttempt(guess, guessRow);
         
         // Clear the input for the next guess
         guessInput.value = '';
+        guessInput.placeholder = `Guess ${numberOfAttempts + 1}/8`
     });
 
     /* function displaySongName(guess, guessRow){

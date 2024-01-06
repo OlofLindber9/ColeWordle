@@ -1,5 +1,4 @@
 body {
-    font-family: 'Arial', sans-serif;
     background-color: #49463d;    
 }
 
@@ -22,6 +21,8 @@ body::before {
     font-weight: bold;
     border: none;
     font-size: 4vw;
+    margin-bottom: 3vw;
+    font-family: 'BodoniModa';
 }
 
 .game-container {
@@ -36,8 +37,7 @@ body::before {
 }
 
 #guess-input {
-    flex-grow: 1; /* Allows the input to grow and fill the space */
-    /* Other styles... (no need to set width here) */
+    flex-grow: 1;
 }
 
 #submit-guess {
@@ -68,19 +68,6 @@ body::before {
     margin-bottom: 5px;
 }
 
-.green {
-    background-color: #598b56;
-}
-
-.yellow {
-    background-color: #ffc107;
-}
-
-.gray {
-    background-color: #e0e0e0;
-}
-
-
 body, html {
     height: 100%;
     margin: 0;
@@ -95,9 +82,8 @@ h1 {
 }
 
 
-
 .suggestion-box {
-    background-color: white;
+    background-color: rgb(0, 0, 0);
     position: absolute;
     z-index: 1000;
     width: 100%;
@@ -106,35 +92,29 @@ h1 {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     max-height: 200px;
     overflow-y: auto;
-    border: 1px solid #ccc;
-    border-top: none;
     display: none;
 }
 
-/* Styles the scrollbar track (the part the thumb moves within) */
 .suggestion-box::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Track color */
+    background: #ada384; /* Track color */
     border-radius: 10px;
 }
 
-/* Styles the scrollbar thumb (the part that you drag) */
 .suggestion-box::-webkit-scrollbar-thumb {
-    background: #888; /* Thumb color */
+    background: #000000; /* Thumb color */
     border-radius: 10px;
 }
 
-/* Handles hover over the scrollbar thumb */
 .suggestion-box::-webkit-scrollbar-thumb:hover {
     background: #555; /* Thumb hover color */
 }
 
-/* Styles the scrollbar itself (including thumb and track) */
 .suggestion-box::-webkit-scrollbar {
     width: 8px; /* Scrollbar width */
 }
 
 .suggestion-item{
-    color: #252114;
+    color: #fcfcfc;
 }
 
 .suggestion-item:hover{
@@ -152,7 +132,7 @@ h1 {
     align-items: center;
     gap: 10px;
     justify-content: center;
-    width: 300px;
+    width: 400px;
     margin: auto;
     margin-top: 40px;
 }
@@ -177,7 +157,7 @@ h1 {
     background-color: #000000;
  } 
 .cell.green { 
-    background-color: #246126; 
+    background-color: #3f9b4a; 
     box-shadow: 0 0 40px #3f9b4a;
 } 
 .cell.yellow { 
@@ -193,11 +173,19 @@ h1 {
     margin-bottom: 3px;
   }
 
-  .header{
-    background-color: transparent;
-    color: #FFF;
-    text-align: center;
-    font-weight: bold;
-    border: none;
-    border-bottom: 1px solid #ccc;
-  }
+.header{
+background-color: transparent;
+color: #FFF;
+text-align: center;
+font-weight: bold;
+font-family: 'BodoniModa';
+border: none;
+border-bottom: 1px solid #ccc;
+}
+
+@font-face {
+font-family: 'BodoniModa';
+src: url('public/fonts/Bodoni_Moda/BodoniModa-VariableFont_opsz,wght.ttf') format('ttf');
+font-weight: normal;
+font-style: normal;
+}
