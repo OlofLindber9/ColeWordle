@@ -15,9 +15,9 @@
     };
     let numberOfAttempts = 0;
     var targetAlbum;
-    var targetTrackNumber;
-    var targetLength;
-    var targetFeatures;
+    var guessTrackNumber;
+    var guessLength;
+    var guessFeatures;
 
     submitButton.addEventListener("click", async function() {
         const guess = guessInput.value;
@@ -36,7 +36,7 @@
         }
 
         const guessRow = document.createElement('li');  
-        guessRow.className = "list-group-item"; 
+        guessRow.className = "matrix-row"; 
         await displayAttempt(guess, guessRow);   
         
         const victory = await checkIfVictory(guess, targetSong);
@@ -50,7 +50,7 @@
         guessInput.value = '';
     });
 
-    function displaySongName(guess, guessRow){
+    /* function displaySongName(guess, guessRow){
         console.log("Attempting to display...");
 
         var info;
@@ -77,9 +77,31 @@
             attemptsDiv.appendChild(guessRow);              //THIS IS ONLY DONE ONES
         })
         .catch(error => console.error('Error fetching data:', error));
+    }*/
+
+    function displaySongName(guess, songNameCell) {
+        console.log("Attempting to display...");
+    
+        let encodedSongName = encodeURIComponent(guess);
+        let url = `http://localhost:3000/api/name?name=${encodedSongName}`;
+    
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                songNameCell.textContent = data[0].name;
+
+
+                if (data[0].name.toLowerCase() === targetSong.toLowerCase()) {
+                    songNameCell.classList.add('green');
+                }
+    
+                console.log("Display complete.");
+                console.log(data); 
+            })
+            .catch(error => console.error('Error fetching data:', error));
     }
 
-    function displaySongAlbum(guess, guessRow){
+    function displaySongAlbum(guess, songAlbumCell){
         console.log("Attempting to display...");
 
         var info;
@@ -89,37 +111,30 @@
         let encodedTargetSongName = encodeURIComponent(targetSong);
         let url2 = `http://localhost:3000/api/album?name=${encodedTargetSongName}`
 
-        var color;
-        const letterBadge = document.createElement('span');
-
         fetch(url)
         .then(response => response.json())
         .then(data => {
             info = data;
-            letterBadge.className = `badge badge-pill mr-2 mb-2 badge`;
-            letterBadge.textContent = info[0].album;
+            songAlbumCell.textContent = info[0].album;
             targetAlbum = info[0].album;
             console.log(info)
             return fetch(url2);
         })
         .then(response => response.json())
         .then(data => {
-            color = '#090401';
             if ((AlbumOrder[targetAlbum] - AlbumOrder[data[0].album]) === 0){
-                color = '#28812d'
+                songAlbumCell.classList.add('green');
             }
             else if (Math.abs(AlbumOrder[targetAlbum] -  AlbumOrder[data[0].album]) < 3){    //THIS DOESN'T INDICATE IF YOU ARE ABOVE OR UNDER
-                color = '#c39213'
+                songAlbumCell.classList.add('yellow');
             }
-            letterBadge.style.backgroundColor = color;
-            guessRow.appendChild(letterBadge);
             console.log("Display complete.");
         })
         .catch(error => console.error('Error fetching data:', error));
         
     }
 
-    function displaySongNumber(guess, guessRow){
+    function displaySongNumber(guess, songNumberCell){
         console.log("Attempting to display...");
 
         var info;
@@ -129,36 +144,29 @@
         let encodedTargetSongName = encodeURIComponent(targetSong);
         let url2 = `http://localhost:3000/api/tracknumber?name=${encodedTargetSongName}`
 
-        var color;
-        const letterBadge = document.createElement('span');
-
         fetch(url)
         .then(response => response.json())
         .then(data => {
             info = data;
-            letterBadge.className = `badge badge-pill mr-2 mb-2 badge`;
-            letterBadge.textContent = info[0].tracknumber;
-            targetTrackNumber = info[0].tracknumber;
+            songNumberCell.textContent = info[0].tracknumber;
+            guessTrackNumber = info[0].tracknumber;
             console.log(info)
             return fetch(url2);
         })
         .then(response => response.json())
         .then(data => {
-            color = '#090401';
-            if (targetTrackNumber === data[0].tracknumber){
-                color = '#28812d'
+            if (guessTrackNumber === data[0].tracknumber){
+                songNumberCell.classList.add('green');
             }
-            else if (Math.abs(parseInt(targetTrackNumber, 10) - parseInt(data[0].tracknumber, 10)) < 3 ) {
-                color = '#c39213'
+            else if (Math.abs(parseInt(guessTrackNumber, 10) - parseInt(data[0].tracknumber, 10)) < 3 ) {
+                songNumberCell.classList.add('yellow');
             }
-            letterBadge.style.backgroundColor = color;
-            guessRow.appendChild(letterBadge);
             console.log("Display complete.");
         })
         .catch(error => console.error('Error fetching data:', error));
     }
 
-    function displaySongLength(guess, guessRow){
+    function displaySongLength(guess, songLengthCell){
         console.log("Attempting to display...");
 
         var info;
@@ -168,37 +176,30 @@
         let encodedTargetSongName = encodeURIComponent(targetSong);
         let url2 = `http://localhost:3000/api/length?name=${encodedTargetSongName}`
 
-        var color;
-        const letterBadge = document.createElement('span');
-
         fetch(url)
         .then(response => response.json())
         .then(data => {
             info = data;
-            letterBadge.className = `badge badge-pill mr-2 mb-2 badge`;
-            letterBadge.textContent = info[0].length;
-            targetLength = info[0].length;
+            songLengthCell.textContent = info[0].length;
+            guessLength = info[0].length;
             console.log(info)
             return fetch(url2);
         })
         .then(response => response.json())
         .then(data => {
-            color = '#090401';
-            if (targetLength === data[0].length){
-                color = '#28812d'
+            if (guessLength === data[0].length){
+                songLengthCell.classList.add('green');
             }
 
-            else if (Math.abs(convertTimeStringToSeconds(targetLength) - convertTimeStringToSeconds(data[0].length)) < 31){
-                color = '#c39213'
+            else if (Math.abs(convertTimeStringToSeconds(guessLength) - convertTimeStringToSeconds(data[0].length)) < 31){
+                songLengthCell.classList.add('yellow');
             }
-            letterBadge.style.backgroundColor = color;
-            guessRow.appendChild(letterBadge);
             console.log("Display complete.");
         })
         .catch(error => console.error('Error fetching data:', error));
     }
 
-    function displaySongFeature(guess, guessRow){
+    function displaySongFeature(guess, songFeatureCell){
         console.log("Attempting to display...");
 
         var info;
@@ -208,27 +209,20 @@
         let encodedTargetSongName = encodeURIComponent(targetSong);
         let url2 = `http://localhost:3000/api/features?name=${encodedTargetSongName}`
 
-        var color;
-        const letterBadge = document.createElement('span');
-
         fetch(url)
         .then(response => response.json())
         .then(data => {
             info = data;
-            letterBadge.className = `badge badge-pill mr-2 mb-2 badge`;
-            letterBadge.textContent = info[0].features;
-            targetFeatures = info[0].features;
+            songFeatureCell.textContent = info[0].features;
+            guessFeatures = info[0].features;
             console.log(info)
             return fetch(url2);
         })
         .then(response => response.json())
         .then(data => {
-            color = '#090401';
-            if (targetFeatures === data[0].features){
-                color = '#28812d'
+            if (guessFeatures === data[0].features){
+                songFeatureCell.classList.add('green');
             }
-            letterBadge.style.backgroundColor = color;
-            guessRow.appendChild(letterBadge);
             console.log("Display complete.");
         })
         .catch(error => console.error('Error fetching data:', error));
@@ -243,11 +237,34 @@
     }
 
     async function displayAttempt(guess, guessRow){
-        await displaySongName(guess, guessRow);
-        await displaySongAlbum(guess, guessRow);
-        await displaySongNumber(guess, guessRow);
-        await displaySongLength(guess, guessRow);
-        await displaySongFeature(guess, guessRow);
+
+        attemptsDiv.appendChild(guessRow);
+
+        const songNameCell = document.createElement('div');
+        songNameCell.className = 'cell black';
+        guessRow.appendChild(songNameCell);
+
+        const songAlbumCell = document.createElement('div');
+        songAlbumCell.className = 'cell black';
+        guessRow.appendChild(songAlbumCell);
+
+        const songNumberCell = document.createElement('div');
+        songNumberCell.className = 'cell black';
+        guessRow.appendChild(songNumberCell);
+
+        const songLengthCell = document.createElement('div');
+        songLengthCell.className = 'cell black';
+        guessRow.appendChild(songLengthCell);
+
+        const songFeatureCell = document.createElement('div');
+        songFeatureCell.className = 'cell black';
+        guessRow.appendChild(songFeatureCell);
+
+        await displaySongName(guess, songNameCell);
+        await displaySongAlbum(guess, songAlbumCell);
+        await displaySongNumber(guess, songNumberCell);
+        await displaySongLength(guess, songLengthCell);
+        await displaySongFeature(guess, songFeatureCell);
         await new Promise(resolve => setTimeout(resolve, 100));
     }
 
@@ -298,54 +315,3 @@
     }
 
 });
-
-
-
-
-
-
-
-
-
-
-    /*
-    function displayAttempt(guess, feedback) {
-        const attemptDiv = document.createElement('div');
-
-        [...guess].forEach((letter, index) => {
-            const letterSpan = document.createElement('span');
-            letterSpan.textContent = letter;
-            letterSpan.style.backgroundColor = feedback[index];
-            attemptDiv.appendChild(letterSpan);
-        });
-
-        attemptsDiv.appendChild(attemptDiv);
-    } */
-
-
-
-
-
- /*
-    function displayAttempt(guess, feedback) {
-        const guessRow = document.createElement('li');
-        guessRow.className = "list-group-item";
-        console.log("Attempting to display...");
-        [...guess].forEach((letter, index) => {
-            const letterBadge = document.createElement('span');
-            letterBadge.className = `badge badge-pill mr-2 mb-2 badge-${feedback[index]}`;
-            //letterBadge.className = `badge bg-${feedback[index]}`;
-            letterBadge.textContent = letter;
-            letterBadge.style.backgroundColor = feedback[index];
-            guessRow.appendChild(letterBadge);
-        });
-        console.log("Display complete.");
-        attemptsDiv.appendChild(guessRow);
-
-        fetch('http://localhost:3000/api/songs')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data); // Do something with the data
-            })
-            .catch(error => console.error('Error fetching data:', error));
-    }*/
