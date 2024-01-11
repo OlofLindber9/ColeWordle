@@ -1,5 +1,5 @@
 body {
-    background-color: #49463d;    
+    background-color: #31302e;    
 }
 
 body::before {
@@ -27,13 +27,13 @@ body::before {
 
 .game-container {
     text-align: center;
-    background-color: #49463d;
+    background-color: #31302e;
 }
 
 .guess-input, .btn-primary {
     margin: 20px 0;
     width: 100%;
-    background-color: #49463d;
+    background-color: #31302e;
 }
 
 #guess-input {
@@ -41,9 +41,9 @@ body::before {
 }
 
 #submit-guess {
-    background-color: #49463d; /* Bootstrap primary blue by default */
+    background-color: #31302e; /* Bootstrap primary blue by default */
     color: white; /* Text color */
-    border: 1px solid #49463d; 
+    border: 1px solid #31302e; 
     padding: 10px 20px;
     font-size: 16px;
     border: none;
@@ -53,8 +53,8 @@ body::before {
 
 /* To change the appearance on hover */
 #submit-guess:hover {
-    background-color: #35332c; /* Darker shade of blue for hover effect */
-    border-color: #35332c;
+    background-color: #272624; /* Darker shade of blue for hover effect */
+    border-color: #272624;
 }
 
 .past-guesses {
@@ -189,3 +189,59 @@ src: url('public/fonts/Bodoni_Moda/BodoniModa-VariableFont_opsz,wght.ttf') forma
 font-weight: normal;
 font-style: normal;
 }
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    animation-name: fadeIn;
+    animation-duration: 0.4s;
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    animation-name: slideIn;
+    animation-duration: 0.5s;
+  }
+  
+  /* The Close Button */
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* Add Animation */
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+  
+  @keyframes slideIn {
+    from {top: -300px; opacity: 0}
+    to {top: 50%; opacity: 1;}
+  }

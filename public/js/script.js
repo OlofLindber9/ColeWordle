@@ -19,6 +19,8 @@
     var guessLength;
     var guessFeatures;
     var gameOver = false;
+    var closeButton = document.getElementsByClassName('close-button')[0];
+    var modal = document.getElementById('victoryModal'); 
 
 
     const headerRow = document.createElement('li');  
@@ -60,7 +62,7 @@
         const guess = guessInput.value;
         
         const validInput = await checkInput(guess);
-        if (!validInput) {
+        if (!validInput || guess === '') {
             alert("That is not a song. Try again");
             guessInput.value = '';
             return;
@@ -71,9 +73,9 @@
             const guessRow = document.createElement('li');  
             guessRow.className = "matrix-row"; 
             await displayAttempt(guess, guessRow); 
-            alert("CONGRATULATIONS! You guessed the correct song");
             guessInput.value = '';
-            gameOver = true;                      
+            gameOver = true; 
+            modal.style.display = 'block';                    
             return;
         }
 
@@ -85,7 +87,7 @@
                 guessRow.className = "matrix-row"; 
                 await displayAttempt(guess, guessRow);   
             }
-            alert("you are out of guesses. Gameover")
+            modal.style.display = 'block';   
             return;
         }
 
@@ -98,34 +100,20 @@
         guessInput.placeholder = `Guess ${numberOfAttempts + 1}/8`
     });
 
-    /* function displaySongName(guess, guessRow){
-        console.log("Attempting to display...");
 
-        var info;
-        let encodedSongName = encodeURIComponent(guess);
-        let url = `http://localhost:3000/api/name?name=${encodedSongName}`
-        var color;
 
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            info = data;
-            color = '#090401';
-            const letterBadge = document.createElement('span');
-            letterBadge.className = `badge badge-pill mr-2 mb-2 badge`;
-            letterBadge.textContent = info[0].name;
-            if (info[0].name === targetSong){
-                color = '#28812d'
-            }
-            letterBadge.style.backgroundColor = color;
-            guessRow.appendChild(letterBadge);
-            console.log("Display complete.");
-            console.log(info)
-    
-            attemptsDiv.appendChild(guessRow);              //THIS IS ONLY DONE ONES
-        })
-        .catch(error => console.error('Error fetching data:', error));
-    }*/
+    // When the user clicks on <span> (x), close the modal
+    closeButton.onclick = function() {
+    modal.style.display = 'none';
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+    }
+
 
     function displaySongName(guess, songNameCell) {
         console.log("Attempting to display...");

@@ -127,12 +127,12 @@ app.get('/api/count', async (req, res) => {
     }
 });
 
-// Suggest songs from string with a limit of 10 results and case-insensitive search
+
 app.get('/api/suggestions', async (req, res) => {
     const partialName = req.query.partial;
     try {
         // Use ILIKE for case-insensitive matching
-        const query = 'SELECT name FROM songs WHERE name ILIKE $1 LIMIT 10';
+        const query = 'SELECT name FROM songs WHERE name ILIKE $1';
         const values = [`%${partialName}%`];
 
         const result = await client.query(query, values);
