@@ -19,7 +19,6 @@
     var guessLength;
     var guessFeatures;
     var gameOver = false;
-    var closeButton = document.getElementsByClassName('close-button')[0];
     var modal = document.getElementById('victoryModal'); 
 
 
@@ -28,27 +27,27 @@
     attemptsDiv.appendChild(headerRow); 
 
     const songNameheader = document.createElement('div');
-    songNameheader.className = 'header';
+    songNameheader.className = 'header-matrixlabel';
     songNameheader.textContent = 'Song'
     headerRow.appendChild(songNameheader);
 
     const songAlbumheader = document.createElement('div');
-    songAlbumheader.className = 'header';
+    songAlbumheader.className = 'header-matrixlabel';
     songAlbumheader.textContent = 'Album'
     headerRow.appendChild(songAlbumheader);
 
     const songNumberheader = document.createElement('div');
-    songNumberheader.className = 'header';
+    songNumberheader.className = 'header-matrixlabel';
     songNumberheader.textContent = 'Track No.'
     headerRow.appendChild(songNumberheader);
 
     const songLengthheader = document.createElement('div');
-    songLengthheader.className = 'header';
+    songLengthheader.className = 'header-matrixlabel';
     songLengthheader.textContent = 'Track Length'
     headerRow.appendChild(songLengthheader);
 
     const songFeatureheader = document.createElement('div');
-    songFeatureheader.className = 'header';
+    songFeatureheader.className = 'header-matrixlabel';
     songFeatureheader.textContent = 'Features'
     headerRow.appendChild(songFeatureheader); 
 
@@ -99,20 +98,6 @@
         guessInput.value = '';
         guessInput.placeholder = `Guess ${numberOfAttempts + 1}/8`
     });
-
-
-
-    // When the user clicks on <span> (x), close the modal
-    closeButton.onclick = function() {
-    modal.style.display = 'none';
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-    }
 
 
     function displaySongName(guess, songNameCell) {

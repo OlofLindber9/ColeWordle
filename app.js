@@ -157,3 +157,18 @@ app.get('/api/songdata', async (req, res) => {
         res.status(500).send('Error fetching data');
     }
 });
+
+// Get correct song from ID
+app.get('/api/correctSong', async (req, res) => {
+    const songID = req.query.id;
+    try {
+        const query = 'SELECT * FROM correctSongs WHERE ID = $1';
+        const values = [songID];
+
+        const result = await client.query(query, values);
+        res.json(result.rows);
+    } catch (err) {
+        console.error('Error executing query', err.stack);
+        res.status(500).send('Error fetching data');
+    }
+});

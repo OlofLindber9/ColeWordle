@@ -41,8 +41,8 @@ body::before {
 }
 
 #submit-guess {
-    background-color: #31302e; /* Bootstrap primary blue by default */
-    color: white; /* Text color */
+    background-color: #31302e;
+    color: white;
     border: 1px solid #31302e; 
     padding: 10px 20px;
     font-size: 16px;
@@ -51,9 +51,9 @@ body::before {
     transition: background-color 0.3s ease;
 }
 
-/* To change the appearance on hover */
+
 #submit-guess:hover {
-    background-color: #272624; /* Darker shade of blue for hover effect */
+    background-color: #272624;
     border-color: #272624;
 }
 
@@ -173,7 +173,7 @@ h1 {
     margin-bottom: 3px;
   }
 
-.header{
+.header-matrixlabel{
 background-color: transparent;
 color: #FFF;
 text-align: center;
@@ -212,17 +212,19 @@ font-style: normal;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fefefe;
+    background-color: #020202;
     padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    border: 1px solid #000000;
+    width: 50%;
     animation-name: slideIn;
     animation-duration: 0.5s;
+    font-family: 'BodoniModa';
+    box-shadow: 0 0 40px #3f9b4a;
   }
   
   /* The Close Button */
   .close-button {
-    color: #aaa;
+    color: #ffffff;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -230,7 +232,7 @@ font-style: normal;
   
   .close-button:hover,
   .close-button:focus {
-    color: black;
+    color: #aaa;
     text-decoration: none;
     cursor: pointer;
   }
