@@ -162,7 +162,7 @@ app.get('/api/songdata', async (req, res) => {
 app.get('/api/correctSong', async (req, res) => {
     const songID = req.query.id;
     try {
-        const query = 'SELECT * FROM correctSongs WHERE ID = $1';
+        const query = 'SELECT song FROM correctsongs WHERE id = $1';
         const values = [songID];
 
         const result = await client.query(query, values);

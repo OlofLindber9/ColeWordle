@@ -1,6 +1,7 @@
- document.addEventListener("DOMContentLoaded", function() {
+ document.addEventListener("DOMContentLoaded", async function() {
 
-    const targetSong = "Hello";
+    var id = 3;
+    const targetSong = await getCorrectSong(id);
     const submitButton = document.getElementById("submit-guess");
     const guessInput = document.getElementById("guess-input");
     const attemptsDiv = document.querySelector(".attempts");
@@ -19,7 +20,8 @@
     var guessLength;
     var guessFeatures;
     var gameOver = false;
-    var modal = document.getElementById('victoryModal'); 
+    var victoryModal = document.getElementById('victoryModal'); 
+    var loseModal = document.getElementById('loseModal');
 
 
     const headerRow = document.createElement('li');  
@@ -52,6 +54,17 @@
     headerRow.appendChild(songFeatureheader); 
 
 
+    async function getCorrectSong(id) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/correctSong?id=${encodeURIComponent(id)}`);
+            const song = await response.json();
+            return song[0].song;
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+
     submitButton.addEventListener("click", async function() {
         
         if(gameOver){
@@ -60,7 +73,10 @@
         
         const guess = guessInput.value;
         
-        const validInput = await checkInput(guess);
+        var validInput = await checkInput(guess);
+        if (guess.length === 1){
+            validInput = false;
+        }
         if (!validInput || guess === '') {
             alert("That is not a song. Try again");
             guessInput.value = '';
@@ -74,7 +90,7 @@
             await displayAttempt(guess, guessRow); 
             guessInput.value = '';
             gameOver = true; 
-            modal.style.display = 'block';                    
+            victoryModal.style.display = 'block';                    
             return;
         }
 
@@ -86,7 +102,7 @@
                 guessRow.className = "matrix-row"; 
                 await displayAttempt(guess, guessRow);   
             }
-            modal.style.display = 'block';   
+            loseModal.style.display = 'block';   
             return;
         }
 
@@ -136,17 +152,24 @@
         .then(response => response.json())
         .then(data => {
             info = data;
-            songAlbumCell.textContent = info[0].album;
-            targetAlbum = info[0].album;
+            albumName = info[0].album;
+            if(albumName === "Cole World: The Sideline Story") {
+                albumName = "Cole World The Sideline Story";
+            }
+            var albumImage = document.createElement('img');
+            albumImage.className = 'album-image';
+            albumImage.src = `/resources/${albumName}.jpg`;
+            guessAlbum = info[0].album;
+            songAlbumCell.appendChild(albumImage);
             console.log(info)
             return fetch(url2);
         })
         .then(response => response.json())
         .then(data => {
-            if ((AlbumOrder[targetAlbum] - AlbumOrder[data[0].album]) === 0){
+            if ((AlbumOrder[guessAlbum] - AlbumOrder[data[0].album]) === 0){
                 songAlbumCell.classList.add('green');
             }
-            else if (Math.abs(AlbumOrder[targetAlbum] -  AlbumOrder[data[0].album]) < 3){    //THIS DOESN'T INDICATE IF YOU ARE ABOVE OR UNDER
+            else if (Math.abs(AlbumOrder[guessAlbum] -  AlbumOrder[data[0].album]) < 3){    //THIS DOESN'T INDICATE IF YOU ARE ABOVE OR UNDER
                 songAlbumCell.classList.add('yellow');
             }
             console.log("Display complete.");

@@ -96,7 +96,7 @@ h1 {
 }
 
 .suggestion-box::-webkit-scrollbar-track {
-    background: #ada384; /* Track color */
+    background: #a09e9a; /* Track color */
     border-radius: 10px;
 }
 
@@ -118,12 +118,13 @@ h1 {
 }
 
 .suggestion-item:hover{
-    color: #252114;
-    background-color: #ada384;
+    color: #000000;
+    background-color: #a09e9a;
+    box-shadow: inset 0 0 10px rgb(34, 33, 33); 
 }
 
 .suggestion-item.selected {
-    background-color: #ada384;
+    background-color: #a09e9a;
 }
 
 .input-area {
@@ -139,7 +140,9 @@ h1 {
 
 
 .cell {
-    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    display: flex;
     padding: 10px;
     margin: 0 4px;
     margin-right: -3px;
@@ -165,29 +168,35 @@ h1 {
     box-shadow: 0 0 40px #fcb75d;
 } 
 
+.album-image {
+    width: 70%;
+    height: auto;
+    display: block;
+}
+
 .matrix-row {
     display: grid;
-    grid-template-columns: 300px 250px 100px 100px 350px;
+    grid-template-columns: 300px 50px 100px 100px 350px;
     gap: 10px;
     align-items: center; 
     margin-bottom: 3px;
   }
 
 .header-matrixlabel{
-background-color: transparent;
-color: #FFF;
-text-align: center;
-font-weight: bold;
-font-family: 'BodoniModa';
-border: none;
-border-bottom: 1px solid #ccc;
+    background-color: transparent;
+    color: #FFF;
+    text-align: center;
+    font-weight: bold;
+    font-family: 'BodoniModa';
+    border: none;
+    border-bottom: 1px solid #ccc;
 }
 
 @font-face {
-font-family: 'BodoniModa';
-src: url('public/fonts/Bodoni_Moda/BodoniModa-VariableFont_opsz,wght.ttf') format('ttf');
-font-weight: normal;
-font-style: normal;
+    font-family: 'BodoniModa';
+    src: url('public/fonts/Bodoni_Moda/BodoniModa-VariableFont_opsz,wght.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
 }
 
 /* The Modal (background) */
@@ -208,6 +217,9 @@ font-style: normal;
   
   /* Modal Content */
   .modal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     top: 50%;
     left: 50%;
@@ -219,9 +231,22 @@ font-style: normal;
     animation-name: slideIn;
     animation-duration: 0.5s;
     font-family: 'BodoniModa';
+  }
+
+  .modal-content.win {
     box-shadow: 0 0 40px #3f9b4a;
   }
-  
+
+  .modal-content.lose {
+    box-shadow: 0 0 40px #702424;
+  }
+  .modal-image {
+    max-width: 60%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
   /* The Close Button */
   .close-button {
     color: #ffffff;
