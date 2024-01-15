@@ -1,7 +1,6 @@
- document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener('initComplete', async function() {
 
-    var id = 3;
-    const targetSong = await getCorrectSong(id);
+    const targetSong = await getCorrectSong(correctSongid);
     const submitButton = document.getElementById("submit-guess");
     const guessInput = document.getElementById("guess-input");
     const attemptsDiv = document.querySelector(".attempts");
@@ -160,6 +159,7 @@
             albumImage.className = 'album-image';
             albumImage.src = `/resources/${albumName}.jpg`;
             guessAlbum = info[0].album;
+            songAlbumCell.classList.add('image');
             songAlbumCell.appendChild(albumImage);
             console.log(info)
             return fetch(url2);

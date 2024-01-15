@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener('initComplete', async function() {
 
     var victoryModalcloseButton = document.getElementsByClassName('close-button')[0];
     var loseModalcloseButton = document.getElementsByClassName('close-button')[1];
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async function() {
     var loseModalImage = loseModal.querySelector('.modal-image');
     var correctSong;
     var correctSongAlbumCover;
-    var id = 3;
+    var id = correctSongid;
     await getCorrectSong(id);
     await getCorrectSongAlbumCover(correctSong);
 

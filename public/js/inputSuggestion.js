@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('initComplete', (event) => {
     const input = document.getElementById('guess-input');
     const suggestionBox = document.getElementById('suggestion-box');
     input.parentNode.insertBefore(suggestionBox, input.nextSibling);
