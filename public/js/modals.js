@@ -2,10 +2,13 @@ document.addEventListener('initComplete', async function() {
 
     var victoryModalcloseButton = document.getElementsByClassName('close-button')[0];
     var loseModalcloseButton = document.getElementsByClassName('close-button')[1];
+    var rulesModalcloseButton = document.getElementsByClassName('close-button')[2];
     var victoryModal = document.getElementById('victoryModal'); 
     var loseModal = document.getElementById('loseModal');
+    var rulesModal = document.getElementById('rulesModal');
     var victoryModalContent = victoryModal.querySelector('.modal-content');
     var loseModalContent = loseModal.querySelector('.modal-content');
+    var rulesModalContent = rulesModal.querySelector('.modal-content');
     var victoryModalImage = victoryModal.querySelector('.modal-image');
     var loseModalImage = loseModal.querySelector('.modal-image');
     var correctSong;
@@ -30,7 +33,38 @@ document.addEventListener('initComplete', async function() {
     loseModalContent.appendChild(loseHeader);
     loseModalImage.src = `/resources/${correctSongAlbumCover}.jpg`;
 
-    // When the user clicks on <span> (x), close the modal
+    const ruleHeader = document.createElement('h1');
+    ruleHeader.textContent = `Welcome to ColeWordle!`;
+    rulesModalContent.appendChild(ruleHeader);
+
+    const rulePurposeMessage = document.createElement('h5');
+    rulePurposeMessage.className = 'rule-purpose-message';
+    rulePurposeMessage.textContent = `Guess the mystery J. Cole song!`;
+    rulesModalContent.appendChild(rulePurposeMessage);
+
+    const rulesList = document.createElement('ul');
+    rulesList.className = 'rules-list';
+
+    const rules = [
+    "You get eight guesses to guess a mystery song from any of J. cole's 6 studio albums!",
+    'Green in any column  indicates a complete match!',
+    'Yellow in the album or track number column  indicates that this attribute is within 2 (albums or tracks).',
+    'Yellow in the track length column  indicates that the song length is within 30 seconds.',
+    'Yellow in the features column  indicates that at least one of the featured artists is correct.',
+    ];
+
+    rules.forEach(ruleText => {
+        const rule = document.createElement('li');
+        rule.innerHTML = ruleText.replace(/Green in any column/g, '<span class="green-text">Green in any column</span>')
+                                 .replace(/Yellow in the album or track number column/g, '<span class="yellow-text">Yellow in the album or track number column</span>')
+                                 .replace(/Yellow in the track length column/g, '<span class="yellow-text">Yellow in the track length column</span>')
+                                 .replace(/Yellow in the features column/g, '<span class="yellow-text">Yellow in the features column</span>');
+        rulesList.appendChild(rule);
+      });
+
+    rulesModalContent.appendChild(rulesList);
+
+    // When the user clicks on (x), close the modal
     victoryModalcloseButton.onclick = function() {
         victoryModal.style.display = 'none';
     };
@@ -42,7 +76,7 @@ document.addEventListener('initComplete', async function() {
         }
     };
     
-    // When the user clicks on <span> (x), close the modal
+    // When the user clicks on (x), close the modal
     loseModalcloseButton.onclick = function() {
         loseModal.style.display = 'none';
     };
@@ -51,6 +85,18 @@ document.addEventListener('initComplete', async function() {
     window.onclick = function(event) {
         if (event.target === loseModal) {
             loseModal.style.display = 'none';
+        }
+    };
+
+    // When the user clicks on (x), close the modal
+    rulesModalcloseButton.onclick = function() {
+        rulesModal.style.display = 'none';
+    };
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target === rulesModal) {
+            rulesModal.style.display = 'none';
         }
     };
 

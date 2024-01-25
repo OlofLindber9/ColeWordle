@@ -28,6 +28,8 @@ body::before {
 .game-container {
     text-align: center;
     background-color: #31302e;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .guess-input, .btn-primary {
@@ -43,7 +45,8 @@ body::before {
 #submit-guess {
     background-color: #31302e;
     color: white;
-    border: 1px solid #31302e; 
+    border: 1px solid #31302e;
+    font-family: 'BodoniModa'; 
     padding: 10px 20px;
     font-size: 16px;
     border: none;
@@ -258,6 +261,11 @@ h1 {
   .modal-content.lose {
     box-shadow: 0 0 40px #702424;
   }
+
+  .modal-content.rules {
+    box-shadow: 0 0 40px #aaaaaa;
+  }
+
   .modal-image {
     max-width: 60%;
     height: auto;
@@ -289,4 +297,62 @@ h1 {
   @keyframes slideIn {
     from {top: -300px; opacity: 0}
     to {top: 50%; opacity: 1;}
+  }
+
+  .rules-button{
+    background-color: #31302e;
+    color: white;
+    border: 1px solid #31302e; 
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: 'BodoniModa';
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    margin-right: -900px; 
+    margin-left: 20px;
+  }
+
+  .rules-button:hover,
+  .rules-button:focus {
+    background-color: #272624;
+    border-color: #272624;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .rules-list{
+    color: #ffffff;
+    font-family: 'BodoniModa';
+    list-style-type: none;
+    list-style-type: disc;
+    padding-left: 40px;
+  }
+
+  .rules-list li {
+    font-size: 20px;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .rule-purpose-message{
+    color: #acacac;
+    font-family: 'BodoniModa';
+    font-size: 20px;
+    margin-bottom: 40px;
+  }
+
+  .green-text {
+    background-color: #1d7a33;
+    padding: 0.2em 0.4em;
+    border-radius: 0.5em;
+    box-decoration-break: clone;
+  }
+  
+  .yellow-text {
+    background-color: #c59504;
+    padding: 0.2em 0.4em;
+    border-radius: 0.5em;
+    box-decoration-break: clone;
   }

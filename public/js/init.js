@@ -1,4 +1,4 @@
-const dateStr = "2024-01-15";
+var dateStr = "2024-01-15";
 var correctSongid;
 function deterministicRandomIntFromDate(dateStr, minVal = 1, maxVal = 57) {
   // Create a SHA-256 hash of the input date string and return a Promise
@@ -18,11 +18,20 @@ function deterministicRandomIntFromDate(dateStr, minVal = 1, maxVal = 57) {
     });
 }
 
-    // Usage
+function getCurrentDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
   async function main() {
+      dateStr = getCurrentDate();
       await deterministicRandomIntFromDate(dateStr);
       document.dispatchEvent(new Event('initComplete'));
       console.log(correctSongid);
+      console.log(dateStr);
     }
 
   main();

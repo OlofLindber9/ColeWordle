@@ -4,6 +4,7 @@ document.addEventListener('initComplete', async function() {
     const submitButton = document.getElementById("submit-guess");
     const guessInput = document.getElementById("guess-input");
     const attemptsDiv = document.querySelector(".attempts");
+    const rulesButton = document.getElementById("rules-button");
     const attemptLimit = 8;
     const AlbumOrder = {
         "Cole World: The Sideline Story": 1,
@@ -21,6 +22,7 @@ document.addEventListener('initComplete', async function() {
     var gameOver = false;
     var victoryModal = document.getElementById('victoryModal'); 
     var loseModal = document.getElementById('loseModal');
+    var rulesModal = document.getElementById('rulesModal');
 
 
     const headerRow = document.createElement('li');  
@@ -112,6 +114,10 @@ document.addEventListener('initComplete', async function() {
         // Clear the input for the next guess
         guessInput.value = '';
         guessInput.placeholder = `Guess ${numberOfAttempts + 1}/8`
+    });
+
+    rulesButton.addEventListener("click", function() {
+        rulesModal.style.display = 'block';  
     });
 
 
