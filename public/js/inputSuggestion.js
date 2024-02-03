@@ -14,7 +14,7 @@ document.addEventListener('initComplete', (event) => {
             return;
         }
     
-        let url = `http://localhost:3000/api/suggestions?partial=${encodeURIComponent(partialName)}`;
+        let url = `http://colewordle.com/api/suggestions?partial=${encodeURIComponent(partialName)}`;
         fetch(url)
             .then(response => response.json())
             .then(suggestions => {

@@ -26,7 +26,16 @@ app.use(bodyparser.json());
 app.use(bodyparser.urlencoded( {extended: false}));
 
 const cors = require('cors');
-app.use(cors());
+app.use(cors({
+    origin: function (origin, callback) {
+        const allowedOrigins = ['http://90.224.206.14', 'http://localhost:3000', 'http://127.0.0.1:5501', 'http://colewordle.com'];
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('CORS policy violation'));
+        }
+    },
+}));
 
 
 app.get('/', function(req, res){
@@ -34,8 +43,8 @@ app.get('/', function(req, res){
 });
 
 // Server
-app.listen(3000, function(){
-    console.log('Server Started On Port 3000');
+app.listen(5501, function(){
+    console.log('Server Started On Port 5501');
 });
 
 
