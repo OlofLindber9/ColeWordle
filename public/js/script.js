@@ -122,7 +122,6 @@ document.addEventListener('initComplete', async function() {
 
 
     function displaySongName(guess, songNameCell) {
-        console.log("Attempting to display...");
     
         let encodedSongName = encodeURIComponent(guess);
         let url = `http://colewordle.com/api/name?name=${encodedSongName}`;
@@ -136,15 +135,11 @@ document.addEventListener('initComplete', async function() {
                 if (data[0].name.toLowerCase() === targetSong.toLowerCase()) {
                     songNameCell.classList.add('green');
                 }
-    
-                console.log("Display complete.");
-                console.log(data); 
             })
             .catch(error => console.error('Error fetching data:', error));
     }
 
     function displaySongAlbum(guess, songAlbumCell){
-        console.log("Attempting to display...");
 
         var info;
         let encodedSongName = encodeURIComponent(guess);
@@ -178,14 +173,12 @@ document.addEventListener('initComplete', async function() {
             else if (Math.abs(AlbumOrder[guessAlbum] -  AlbumOrder[data[0].album]) < 3){    //THIS DOESN'T INDICATE IF YOU ARE ABOVE OR UNDER
                 songAlbumCell.classList.add('yellow');
             }
-            console.log("Display complete.");
         })
         .catch(error => console.error('Error fetching data:', error));
         
     }
 
     function displaySongNumber(guess, songNumberCell){
-        console.log("Attempting to display...");
 
         var info;
         let encodedSongName = encodeURIComponent(guess);
@@ -205,19 +198,24 @@ document.addEventListener('initComplete', async function() {
         })
         .then(response => response.json())
         .then(data => {
+
+            if(parseInt(guessTrackNumber, 10) < parseInt(data[0].tracknumber, 10)){
+                songNumberCell.textContent = info[0].tracknumber +'   ↑';
+            }else if (parseInt(guessTrackNumber, 10) > parseInt(data[0].tracknumber, 10)){
+                songNumberCell.textContent = info[0].tracknumber +'   ↓';
+            }
+
             if (guessTrackNumber === data[0].tracknumber){
                 songNumberCell.classList.add('green');
             }
             else if (Math.abs(parseInt(guessTrackNumber, 10) - parseInt(data[0].tracknumber, 10)) < 3 ) {
                 songNumberCell.classList.add('yellow');
             }
-            console.log("Display complete.");
         })
         .catch(error => console.error('Error fetching data:', error));
     }
 
     function displaySongLength(guess, songLengthCell){
-        console.log("Attempting to display...");
 
         var info;
         let encodedSongName = encodeURIComponent(guess);
@@ -232,11 +230,18 @@ document.addEventListener('initComplete', async function() {
             info = data;
             songLengthCell.textContent = info[0].length;
             guessLength = info[0].length;
-            console.log(info)
             return fetch(url2);
         })
         .then(response => response.json())
         .then(data => {
+
+            
+            if(convertTimeStringToSeconds(guessLength) < convertTimeStringToSeconds(data[0].length)){
+                songLengthCell.textContent = info[0].length +'   ↑';
+            }else if (convertTimeStringToSeconds(guessLength) > convertTimeStringToSeconds(data[0].length)){
+                songLengthCell.textContent = info[0].length +'   ↓';
+            }
+
             if (guessLength === data[0].length){
                 songLengthCell.classList.add('green');
             }
@@ -244,13 +249,11 @@ document.addEventListener('initComplete', async function() {
             else if (Math.abs(convertTimeStringToSeconds(guessLength) - convertTimeStringToSeconds(data[0].length)) < 31){
                 songLengthCell.classList.add('yellow');
             }
-            console.log("Display complete.");
         })
         .catch(error => console.error('Error fetching data:', error));
     }
 
     function displaySongFeature(guess, songFeatureCell){
-        console.log("Attempting to display...");
 
         var info;
         let encodedSongName = encodeURIComponent(guess);
@@ -265,7 +268,6 @@ document.addEventListener('initComplete', async function() {
             info = data;
             songFeatureCell.textContent = info[0].features;
             guessFeatures = info[0].features;
-            console.log(info)
             return fetch(url2);
         })
         .then(response => response.json())
@@ -273,7 +275,6 @@ document.addEventListener('initComplete', async function() {
             if (guessFeatures === data[0].features){
                 songFeatureCell.classList.add('green');
             }
-            console.log("Display complete.");
         })
         .catch(error => console.error('Error fetching data:', error));
         
@@ -363,5 +364,10 @@ document.addEventListener('initComplete', async function() {
             return false; // In case of error, return false
         }
     }
+
+    const supportButton = document.getElementById('support-button');
+    supportButton.addEventListener('click', function() {
+        window.open('https://ko-fi.com/colewordle', '_blank');
+    });
 
 });

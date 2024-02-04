@@ -16,5 +16,6 @@
     <script src="/js/inputSuggestion.js" defer></script>
     <script src="/js/modals.js" defer></script>
     <script src="/js/script.js" defer></script>
+    <script src="https://kit.fontawesome.com/b66d6c7a75.js" crossorigin="anonymous"></script>
 <body>
 </html>

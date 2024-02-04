@@ -53,6 +53,7 @@ document.addEventListener('initComplete', async function() {
     'Yellow in the album or track number column  indicates that this attribute is within 2 (albums or tracks).',
     'Yellow in the track length column  indicates that the song length is within 30 seconds.',
     'Yellow in the features column  indicates that at least one of the featured artists is correct.',
+    'The arrows are hinting if the correct tracknumber/songlength is higher/longer ( ↑ ) or lower/shorter ( ↓ )',
     ];
 
     rules.forEach(ruleText => {

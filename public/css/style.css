@@ -356,3 +356,25 @@ h1 {
     border-radius: 0.5em;
     box-decoration-break: clone;
   }
+
+  .support-button{
+    background-color: #31302e;
+    color: white;
+    border: 1px solid #31302e; 
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: 'BodoniModa';
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative; 
+    margin-left: 20px;
+  }
+
+  .support-button:hover,
+  .support-button:focus {
+    background-color: #272624;
+    border-color: #272624;
+    text-decoration: none;
+    cursor: pointer;
+  }
