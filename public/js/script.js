@@ -57,7 +57,7 @@ document.addEventListener('initComplete', async function() {
 
     async function getCorrectSong(id) {
         try {
-            const response = await fetch(`http://colewordle.com/api/correctSong?id=${encodeURIComponent(id)}`);
+            const response = await fetch(`https://colewordle.com/api/correctSong?id=${encodeURIComponent(id)}`);
             const song = await response.json();
             return song[0].song;
         } catch (error) {
@@ -124,7 +124,7 @@ document.addEventListener('initComplete', async function() {
     function displaySongName(guess, songNameCell) {
     
         let encodedSongName = encodeURIComponent(guess);
-        let url = `http://colewordle.com/api/name?name=${encodedSongName}`;
+        let url = `https://colewordle.com/api/name?name=${encodedSongName}`;
     
         fetch(url)
             .then(response => response.json())
@@ -143,10 +143,10 @@ document.addEventListener('initComplete', async function() {
 
         var info;
         let encodedSongName = encodeURIComponent(guess);
-        let url = `http://colewordle.com/api/album?name=${encodedSongName}`
+        let url = `https://colewordle.com/api/album?name=${encodedSongName}`
 
         let encodedTargetSongName = encodeURIComponent(targetSong);
-        let url2 = `http://colewordle.com/api/album?name=${encodedTargetSongName}`
+        let url2 = `https://colewordle.com/api/album?name=${encodedTargetSongName}`
 
         fetch(url)
         .then(response => response.json())
@@ -182,10 +182,10 @@ document.addEventListener('initComplete', async function() {
 
         var info;
         let encodedSongName = encodeURIComponent(guess);
-        let url = `http://colewordle.com/api/tracknumber?name=${encodedSongName}`
+        let url = `https://colewordle.com/api/tracknumber?name=${encodedSongName}`
 
         let encodedTargetSongName = encodeURIComponent(targetSong);
-        let url2 = `http://colewordle.com/api/tracknumber?name=${encodedTargetSongName}`
+        let url2 = `https://colewordle.com/api/tracknumber?name=${encodedTargetSongName}`
 
         fetch(url)
         .then(response => response.json())
@@ -219,10 +219,10 @@ document.addEventListener('initComplete', async function() {
 
         var info;
         let encodedSongName = encodeURIComponent(guess);
-        let url = `http://colewordle.com/api/length?name=${encodedSongName}`
+        let url = `https://colewordle.com/api/length?name=${encodedSongName}`
 
         let encodedTargetSongName = encodeURIComponent(targetSong);
-        let url2 = `http://colewordle.com/api/length?name=${encodedTargetSongName}`
+        let url2 = `https://colewordle.com/api/length?name=${encodedTargetSongName}`
 
         fetch(url)
         .then(response => response.json())
@@ -257,10 +257,10 @@ document.addEventListener('initComplete', async function() {
 
         var info;
         let encodedSongName = encodeURIComponent(guess);
-        let url = `http://colewordle.com/api/features?name=${encodedSongName}`
+        let url = `https://colewordle.com/api/features?name=${encodedSongName}`
 
         let encodedTargetSongName = encodeURIComponent(targetSong);
-        let url2 = `http://colewordle.com/api/features?name=${encodedTargetSongName}`
+        let url2 = `https://colewordle.com/api/features?name=${encodedTargetSongName}`
 
         fetch(url)
         .then(response => response.json())
@@ -321,7 +321,7 @@ document.addEventListener('initComplete', async function() {
 
     async function checkInput(input){
         let encodedInput = encodeURIComponent(input);
-        let url = `http://colewordle.com/api/count?q=${encodedInput}`;
+        let url = `https://colewordle.com/api/count?q=${encodedInput}`;
 
         try{
             const response = await fetch(url);
@@ -340,7 +340,7 @@ document.addEventListener('initComplete', async function() {
         let guessData, targetData;
 
         try {
-            let guessResponse = await fetch(`http://colewordle.com/api/songdata?name=${encodeURIComponent(guess)}`);
+            let guessResponse = await fetch(`https://colewordle.com/api/songdata?name=${encodeURIComponent(guess)}`);
             let guessResult = await guessResponse.json();
             guessData = guessResult[0];
     

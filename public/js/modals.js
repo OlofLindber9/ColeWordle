@@ -105,7 +105,7 @@ document.addEventListener('initComplete', async function() {
 
     async function getCorrectSong(id) {
         try {
-            const response = await fetch(`http://colewordle.com/api/correctSong?id=${encodeURIComponent(id)}`);
+            const response = await fetch(`https://colewordle.com/api/correctSong?id=${encodeURIComponent(id)}`);
             const song = await response.json();
             correctSong = song[0].song;
         } catch (error) {
@@ -115,7 +115,7 @@ document.addEventListener('initComplete', async function() {
 
     async function getCorrectSongAlbumCover(correctSong) {
         try {
-            const response = await fetch(`http://colewordle.com/api/album?name=${encodeURIComponent(correctSong)}`);
+            const response = await fetch(`https://colewordle.com/api/album?name=${encodeURIComponent(correctSong)}`);
             const albumCover = await response.json();
             correctSongAlbumCover = albumCover[0].album;
         } catch (error) {
